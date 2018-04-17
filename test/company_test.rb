@@ -67,7 +67,7 @@ class CompanyTest < Minitest::Test
     assert_equal expected, actual
   end
 
-  def test_can_load_timesheets_correctly
+  def test_it_can_load_timesheets_correctly
     @c.load_timesheets('./data/good_timesheets.csv')
     expected = 1
     actual = @c.timesheets.last.project_id
@@ -76,6 +76,13 @@ class CompanyTest < Minitest::Test
 
     expected = Date
     actual = @c.timesheets.first.date.class
+
+    assert_equal expected, actual
+  end
+
+  def test_it_can_catch_bad_data_on_timesheet_load_in
+    expected = {:success=>false, :error=>'bad data'}
+    actual = @c.load_timesheets('./data/bad_timesheets.csv')
 
     assert_equal expected, actual
   end

@@ -18,7 +18,7 @@ class Company
 
   def load_employees(path)
     CSV.foreach(path) do |row|
-      if row.length != 5
+      if row.length != 5 || row[3].nil? || row[4].nil?
         success_hash[:success] = false
         success_hash[:error] = 'bad data'
         break
@@ -30,7 +30,7 @@ class Company
 
   def load_projects(path)
     CSV.foreach(path) do |row|
-      if row.length != 4
+      if row.length != 4 || row[2].nil? || row[3].nil?
         success_hash[:success] = false
         success_hash[:error] = 'bad data'
         break
@@ -42,7 +42,7 @@ class Company
 
   def load_timesheets(path)
     CSV.foreach(path) do |row|
-      if row.length != 4
+      if row.length != 4 || row[2].nil?
         success_hash[:success] = false
         success_hash[:error] = 'bad data'
         break
