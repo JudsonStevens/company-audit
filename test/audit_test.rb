@@ -104,7 +104,7 @@ class AuditTest < MiniTest::Test
   def test_it_can_check_for_valid_project_id
     c = Company.new
     c.load_projects('./data/projects.csv')
-    c.load_timesheets('./data/good_timesheets.csv')
+    c.load_timesheets('./data/invalid_billing_timesheets.csv')
     c.load_employees('./data/employees.csv')
     @a.load_company(c)
 
