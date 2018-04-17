@@ -57,4 +57,14 @@ class Audit
       end
     end
   end
+
+  def check_timesheet_for_valid_project_id
+    timesheet_project_ids = @company.timesheets.map(&:project_id)
+    actual_project_ids = @company.projects.map(&:project_id)
+    return "Invalid Project ID" if (timesheet_project_ids & actual_project_ids) != []
+  end
+
+
+  end
+
 end

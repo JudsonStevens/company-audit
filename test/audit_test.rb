@@ -101,5 +101,16 @@ class AuditTest < MiniTest::Test
     assert_equal expected, actual
   end
 
+  def test_it_can_check_for_valid_project_id
+    c = Company.new
+    c.load_projects('./data/projects.csv')
+    c.load_timesheets('./data/good_timesheets.csv')
+    c.load_employees('./data/employees.csv')
+    @a.load_company(c)
 
+    expected = "Invalid Project ID"
+    actual = @a.check_timesheet_for_valid_project_id
+
+    assert_equal expected, actual
+  end
 end
