@@ -47,6 +47,19 @@ class CompanyTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_it_can_load_projects_correctly
+    @c.load_projects('./data/projects.csv')
+    expected = 'More Widgets'
+    actual = @c.projects[1].name
+
+    assert_equal expected, actual
+
+    expected = 'Acme Project'
+    actual = @c.projects.last.name
+
+    assert_equal expected, actual
+  end
+
 
 
 end
