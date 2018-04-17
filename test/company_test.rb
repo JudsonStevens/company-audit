@@ -86,4 +86,28 @@ class CompanyTest < Minitest::Test
 
     assert_equal expected, actual
   end
+
+  def test_it_can_find_the_right_employee
+    @c.load_employees('./data/employees.csv')
+    expected = 'Susan Smith'
+    actual = @c.find_employee_by_id(1).name
+
+    assert_equal expected, actual
+
+    actual = @c.find_employee_by_id(100)
+
+    assert_nil actual
+  end
+
+  def test_it_can_find_the_right_project
+    @c.load_projects('./data/projects.csv')
+    expected = 'More Widgets'
+    actual = @c.find_project_by_id(2).name
+
+    assert_equal expected, actual
+
+    actual = @c.find_project_by_id(11)
+
+    assert_nil actual
+  end
 end
