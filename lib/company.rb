@@ -51,4 +51,12 @@ class Company
     end
     @success_hash
   end
+
+  def find_employee_by_id(id)
+    @employees.find { |employee| employee.employee_id == id }
+  end
+
+  def find_project_by_id(id)
+    @projects.find { |project| project.project_id == id }
+  end
 end
