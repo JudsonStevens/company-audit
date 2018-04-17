@@ -27,4 +27,26 @@ class CompanyTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_it_can_load_employees_correctly
+    @c.load_employees('./data/employees.csv')
+    expected = 'Susan Smith'
+    actual = @c.employees.first.name
+
+    assert_equal expected, actual
+
+    expected = 'Engineer'
+    actual = @c.employees[1].role
+
+    assert_equal expected, actual
+  end
+
+  def test_it_can_catch_bad_data_on_employee_load_in
+    expected = {:success=>false, :error=>'bad data'}
+    actual = @c.load_employees('./data/bad_employees.csv')
+
+    assert_equal expected, actual
+  end
+
+
+
 end

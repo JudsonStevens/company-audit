@@ -2,29 +2,32 @@ require './modules/date_handler.rb'
 require './lib/employee.rb'
 require './lib/timesheet.rb'
 require './lib/project.rb'
+require 'csv'
 
 class Company
   attr_reader :employees,
               :projects,
-              :timesheets
+              :timesheets,
+              :success_hash
   def initialize
     @employees = []
     @projects = []
     @timesheets = []
+    @success_hash = {success: true, error: nil}
   end
 
-  def load_employees
-    success_hash = {success: true, error: nil}
-    CSV.foreach('./data/employees.csv') do |row|
-      data = row.split(',')
-      if data.length != 5
+  def load_employees(path)
+    CSV.foreach(path) do |row|
+      if row.length != 5
         success_hash[:success] = false
         success_hash[:error] = 'bad data'
         break
       end
-      @employees << Employee.new(data[0], data[1], data[2], data[3], data[4])
+      @employees << Employee.new(row[0], row[1], row[2], row[3], row[4])
     end
+    @success_hash
   end
 
   def load_projects
+  end
 end
