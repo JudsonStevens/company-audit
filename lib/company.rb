@@ -39,4 +39,16 @@ class Company
     end
     @success_hash
   end
+
+  def load_timesheets(path)
+    CSV.foreach(path) do |row|
+      if row.length != 4
+        success_hash[:success] = false
+        success_hash[:error] = 'bad data'
+        break
+      end
+      @timesheets << Timesheet.new(row[0], row[1], row[2], row[3])
+    end
+    @success_hash
+  end
 end
