@@ -27,7 +27,7 @@ class AuditTest < MiniTest::Test
     @a.load_company(c)
 
     expected = 'none'
-    actual = @a.check_timesheet_dates_for_weekend
+    actual = @a.check_timesheet_dates_for_weekend[0]
 
     assert_equal expected, actual
 
@@ -37,7 +37,7 @@ class AuditTest < MiniTest::Test
     @a.load_company(c1)
 
     expected = 'weekend'
-    actual = @a.check_timesheet_dates_for_weekend
+    actual = @a.check_timesheet_dates_for_weekend[0][:reason]
 
     assert_equal expected, actual
   end
@@ -49,9 +49,22 @@ class AuditTest < MiniTest::Test
     @a.load_company(c)
 
     expected = 'none'
-    actual = @a.check_timesheet_date_for_invalid_billing
+    actual = @a.check_timesheet_date_for_invalid_billing[0]
+
+    assert_equal expected, actual
+
+    c1 = Company.new
+    c1.load_projects('./data/projects.csv')
+    c1.load_timesheets('./data/weekend_timesheet.csv')
+    @a.load_company(c1)
+
+    expected = 'invalid billing date'
+    actual = @a.check_timesheet_date_for_invalid_billing[1][:reason]
 
     assert_equal expected, actual
   end
 
+  def test_it_can_return_invalid_days_worked
+
+  end
 end

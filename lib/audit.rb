@@ -10,16 +10,16 @@ class Audit
     @company = company
   end
 
-  # def were_invalid_days_worked
-  #   if check_timesheet_dates
-  # end
+  def were_invalid_days_worked
+    @response << check_time_sheet_dates_for_weekend
+  end
 
   def check_timesheet_dates_for_weekend
     @company.timesheets.map do |timesheet|
       if timesheet.date.wday == 6 || timesheet.date.wday == 7
-        return 'weekend'
+        {project_id: timesheet.project_id, employee_id: timesheet.employee_id, reason: 'weekend'}
       else
-        return 'none'
+        'none'
       end
     end
   end
@@ -29,9 +29,9 @@ class Audit
       dh = DateHandler::DHDate.new(timesheet.date)
       project = @company.find_project_by_id(timesheet.project_id)
       if !dh.date_between(project.start_date, project.end_date)
-        return 'invalid billing'
+        {project_id: timesheet.project_id, employee_id: timesheet.employee_id, reason: 'invalid billing date'}
       else
-        return 'none'
+        'none'
       end
     end
   end
